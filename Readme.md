@@ -1,7 +1,8 @@
 # Личный проект «Кекстаграм»
 
-* Студент: [Сергей Софронов](https://up.htmlacademy.ru/javascript-individual/2/user/1876915).
-* Наставник: `Неизвестно`.
+* Студент: [Сергей Софронов](https://htmlacademy.ru/profile/id1876915).
+* Наставник: [Станислав Михайлов](https://htmlacademy.ru/profile/id139638).
+* Проект: ["Кекстаграм — сервис просмотра изображений"](https://github.com/SergeySofronov/1876915-kekstagram-2).
 
 ---
 
