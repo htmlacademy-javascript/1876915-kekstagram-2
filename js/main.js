@@ -1,4 +1,5 @@
-import { isStringLengthValid, isPalindromeString, getNumbersFromString } from './functions';
+import { getRandomPhotoDescription } from './utils/data';
+import { isStringLengthValid, isPalindromeString, getNumbersFromString } from './utils/utils';
 
 // eslint-disable-next-line
 console.log(isStringLengthValid('string', undefined));  // false
@@ -15,3 +16,5 @@ console.log(getNumbersFromString({})); // NaN
 // eslint-disable-next-line
 console.log(getNumbersFromString([1, 2, 3, 4])); // 1234
 
+// eslint-disable-next-line
+console.log(getRandomPhotoDescription());
