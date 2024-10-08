@@ -1,5 +1,5 @@
-import { getRandomPhotoDescription } from './utils/data';
-import { isStringLengthValid, isPalindromeString, getNumbersFromString } from './utils/utils';
+import { getRandomPhotoDescription } from './utils/data.js';
+import { isStringLengthValid, isPalindromeString, getNumbersFromString } from './utils/utils.js';
 
 // eslint-disable-next-line
 console.log(isStringLengthValid('string', undefined));  // false

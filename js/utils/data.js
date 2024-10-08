@@ -1,4 +1,4 @@
-import { getRandomArrayPart, getRandomPositiveInteger, getUniqueUIntArray } from './utils';
+import { getRandomArrayPart, getRandomPositiveInteger, getUniqueUIntArray } from './utils.js';
 
 const COMMENTS = [
   'Всё отлично!',
