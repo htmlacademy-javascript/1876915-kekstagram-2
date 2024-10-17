@@ -43,9 +43,9 @@ const preparePhotoDescription = () => {
 
   return (item, index) => ({
     id: photoIds[index],
-    url: `photos/${getRandomPositiveInteger(USER_ID_MIN_VALUE, USER_ID_MAX_VALUE)}.jpg`,
+    url: `photos/${photoIds[index]}.jpg`,
     description: getRandomArrayPart(PHOTO_DESCRIPTIONS, PHOTO_DESCRIPTION_LENGTH).join(' '),
-    likes: getRandomPositiveInteger(PHOTO_LIKES_MIN_QUANTITY, PHOTO_LIKES_MAX_QUANTITY),
+    likesQuantity: getRandomPositiveInteger(PHOTO_LIKES_MIN_QUANTITY, PHOTO_LIKES_MAX_QUANTITY),
     comments: Array.from({ length: getRandomPositiveInteger(COMMENTS_MIN_QUANTITY, COMMENTS_MAX_QUANTITY) }, (CommentItem, commentIndex) => (
       {
         id: userIds[commentIndex],
@@ -57,7 +57,7 @@ const preparePhotoDescription = () => {
   });
 };
 
-export const getRandomPhotoDescription = () => {
-  const adsArray = Array.from({ length: PHOTO_DESCRIPTION_QUANTITY }, preparePhotoDescription());
+export const getRandomPhotoDescriptions = (quantity = PHOTO_DESCRIPTION_QUANTITY) => {
+  const adsArray = Array.from({ length: quantity }, preparePhotoDescription());
   return adsArray;
 };
