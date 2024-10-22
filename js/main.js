@@ -1,6 +1,4 @@
-import { createPictures } from './utils/create-pictures.js';
-import { getRandomPhotoDescriptions } from './utils/data.js';
-import { render, RenderPosition } from './utils/render.js';
+import { getData } from './fetch.js';
+import { createGallery } from './create-gallery.js';
 
-const pictureContainer = document.querySelector('.pictures');
-render(pictureContainer, createPictures(getRandomPhotoDescriptions()), RenderPosition.BEFOREEND);
+getData(createGallery);
