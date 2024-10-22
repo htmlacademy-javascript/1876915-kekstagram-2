@@ -11,8 +11,8 @@ export const render = (container, fragment, place) => {
     throw new Error('Container aren\'t instance of Element');
   }
 
-  if (!(fragment instanceof DocumentFragment)) {
-    throw new Error('fragment aren\'t instance of DocumentFragment');
+  if (!(fragment instanceof DocumentFragment || fragment instanceof Element)) {
+    throw new Error('fragment aren\'t instance of Element or DocumentFragment');
   }
 
   switch (place) {
