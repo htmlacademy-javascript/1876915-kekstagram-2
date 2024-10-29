@@ -11,7 +11,25 @@ export const Methods = {
   POST: 'POST',
 };
 
-export const KeyCode = {
+export const KeyCodes = {
   ESC: 'Escape',
   ENTER: 'Enter',
+};
+
+export const Effects = {
+  CHROME: 'chrome',
+  HEAT: 'heat',
+  NONE: 'none',
+  MARVIN: 'marvin',
+  PHOBOS: 'phobos',
+  SEPIA: 'sepia',
+};
+
+export const EffectStyles = {
+  [Effects.CHROME]: 'grayscale',
+  [Effects.HEAT]: 'brightness',
+  [Effects.NONE]: '',
+  [Effects.MARVIN]: 'invert',
+  [Effects.PHOBOS]: 'blur',
+  [Effects.SEPIA]: 'sepia',
 };
