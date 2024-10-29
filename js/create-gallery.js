@@ -1,11 +1,12 @@
-import { KeyCode, MAX_SHOWN_COMMENT_QUANTITY } from './const.js';
+import { MAX_SHOWN_COMMENT_QUANTITY } from './const.js';
 import { createComment } from './create-comment.js';
 import { createPictures } from './create-pictures.js';
 import { render, RenderPosition } from './render.js';
+import { isEscapeKey } from './utils.js';
 
-const galleryContainerElement = document.querySelector('.pictures');
+const galleryElement = document.querySelector('.pictures');
 const popupElement = document.querySelector('.big-picture');
-const popupCloseElement = popupElement.querySelector('.big-picture__cancel');
+const popupCloseButtonElement = popupElement.querySelector('.big-picture__cancel');
 const popupImgElement = popupElement.querySelector('.big-picture__img > img');
 const popupLikesQuantityElement = popupElement.querySelector('.likes-count');
 const popupCommentShownElement = popupElement.querySelector('.social__comment-shown-count');
@@ -18,19 +19,6 @@ let shownCommentsQuantity = 0;
 let currentPictureId = 0;
 const picturesData = new Map();
 
-const popupCloseHandler = (evt, isKeyPressed) => {
-  if (isKeyPressed && ((evt.key !== KeyCode.ESC))) {
-    return;
-  }
-  document.body.removeEventListener('keydown', popupCloseHandler);
-  popupElement.classList.add('hidden');
-  document.body.classList.remove('modal-open');
-  shownCommentsQuantity = 0;
-
-};
-
-popupCloseElement.addEventListener('click', popupCloseHandler);
-
 const popupCommentsLoaderHandler = (comments) => {
   const rest = Math.min((comments.length - shownCommentsQuantity), MAX_SHOWN_COMMENT_QUANTITY);
   for (let i = shownCommentsQuantity; i < (shownCommentsQuantity + rest); i++) {
@@ -41,10 +29,19 @@ const popupCommentsLoaderHandler = (comments) => {
   popupCommentsLoaderElement.classList.toggle('hidden', comments.length === shownCommentsQuantity);
 };
 
-const updatePopup = ({ url, likes, description, comments = [] }) => {
+const popupCloseKeyHandler = (evt) => isEscapeKey(evt) ? popupCloseButtonElement.dispatchEvent(new Event('click')) : evt;
+
+const popupCloseButtonHandler = () => {
+  shownCommentsQuantity = 0;
+  popupElement.classList.add('hidden');
+  document.body.classList.remove('modal-open');
+  document.body.removeEventListener('keydown', popupCloseKeyHandler);
+};
+
+const showPopup = ({ url, likes, description, comments = [] }) => {
   popupElement.classList.remove('hidden');
   document.body.classList.add('modal-open');
-  document.body.addEventListener('keydown', (evt) => popupCloseHandler(evt, true));
+  document.body.addEventListener('keydown', popupCloseKeyHandler);
   popupImgElement.src = url;
   popupImgElement.alt = description;
   popupDescriptionElement.textContent = description;
@@ -54,14 +51,16 @@ const updatePopup = ({ url, likes, description, comments = [] }) => {
   popupCommentsLoaderHandler(comments);
 };
 
-galleryContainerElement.addEventListener('click', (evt) => {
+galleryElement.addEventListener('click', (evt) => {
   const parent = evt.target.closest('.picture');
   if (parent) {
     evt.preventDefault();
     currentPictureId = +parent.dataset.id;
-    updatePopup(picturesData.get(currentPictureId));
+    showPopup(picturesData.get(currentPictureId));
   }
 });
+
+popupCloseButtonElement.addEventListener('click', popupCloseButtonHandler);
 
 popupCommentsLoaderElement.addEventListener('click', () => {
   popupCommentsLoaderHandler(picturesData.get(currentPictureId).comments);
@@ -72,5 +71,5 @@ export const createGallery = (pictures = []) => {
     picturesData.set(item.id, item);
   });
 
-  render(galleryContainerElement, createPictures(picturesData.values()), RenderPosition.BEFOREEND);
+  render(galleryElement, createPictures(picturesData.values()), RenderPosition.BEFOREEND);
 };

@@ -1,5 +1,7 @@
 /** @module js/utils */
 
+import { KeyCodes } from './const.js';
+
 /**
 * Check the length of the string
 * @param {string} string - string literal
@@ -88,3 +90,6 @@ export const getRandomArrayPart = function (array, length = 0) {
 
   return [];
 };
+
+export const isEscapeKey = (evt) => (evt.key === KeyCodes.ESC);
+export const pluralize = (number, textForms) => textForms[(number % 100 > 4 && number % 100 < 20) ? 2 : [2, 0, 1, 1, 1, 2][(number % 10 < 5) ? Math.abs(number) % 10 : 5]];
