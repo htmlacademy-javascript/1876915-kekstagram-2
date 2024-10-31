@@ -28,8 +28,13 @@ export const Effects = {
 export const EffectStyles = {
   [Effects.CHROME]: 'grayscale',
   [Effects.HEAT]: 'brightness',
-  [Effects.NONE]: '',
+  [Effects.NONE]: 'none',
   [Effects.MARVIN]: 'invert',
   [Effects.PHOBOS]: 'blur',
   [Effects.SEPIA]: 'sepia',
+};
+
+export const ButtonMessages = {
+  SEND: 'Опубликовать',
+  SENDING: 'Отправляем...',
 };

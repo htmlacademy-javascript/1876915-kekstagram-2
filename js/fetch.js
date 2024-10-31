@@ -13,28 +13,18 @@ export const getData = (onSuccess, onFail, onFinally) => fetch(
     }
     throw new Error(`${response.status} ${response.statusText}`);
   })
-  .then((data) => {
-    onSuccess(data);
-  })
-  .catch((err) => {
-    onFail(err);
-  })
+  .then((data) => onSuccess(data))
+  .catch((err) => onFail(err))
   .finally(onFinally);
 
-export const sendData = (onSuccess, onFail, formData) => fetch(
+export const sendData = (onSuccess, onFail, onFinally, body) => fetch(
   EndPoints.SEND,
   {
     method: 'POST',
     credentials: 'same-origin',
-    body: new FormData(formData),
+    body,
   },
 )
-  .then((response) => {
-    if (response.ok) {
-      onSuccess();
-    } else {
-      onFail();
-    }
-  })
-  .catch(onFail);
-
+  .then((response) => response.ok ? onSuccess() : onFail())
+  .catch(onFail)
+  .finally(onFinally);
