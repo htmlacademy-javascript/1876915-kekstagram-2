@@ -1,5 +1,5 @@
 
-const templateElement = document.querySelector('#picture').content.querySelector('.picture');
+const templateElement = document.querySelector('#picture')?.content.querySelector('.picture');
 
 export const createPictures = (data = []) => {
   const pictures = document.createDocumentFragment();
@@ -14,7 +14,7 @@ export const createPictures = (data = []) => {
 
     imgElement.src = item.url;
     imgElement.alt = item.description;
-    commentsElement.textContent = item.comments?.length;
+    commentsElement.textContent = item.comments ? item.comments.length : 0;
     likesElement.textContent = item.likes;
 
     pictures.append(clonedElement);

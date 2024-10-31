@@ -10,8 +10,20 @@ const editorPreviewElement = editorElement.querySelector('.img-upload__preview >
 let activeEffectName = Effects.NONE;
 let activeEffectUnit = '';
 
-const getFormatToSlider = () => (sliderValue)=> parseFloat(sliderValue);
+const getFormatToSlider = () => (sliderValue) => parseFloat(sliderValue);
 const getFormatFromSlider = (digits = 1) => (sliderValue) => parseFloat(sliderValue).toFixed(digits);
+const getDefaultSliderSettings = () => ({
+  range: {
+    min: 0,
+    max: 0,
+  },
+  start: 0,
+  connect: 'lower',
+  format: {
+    to: getFormatFromSlider(),
+    from: getFormatToSlider(),
+  },
+});
 
 export const updateSliderSettings = (effect) => {
   editorSliderParentElement.classList.toggle('hidden', effect === Effects.NONE);
@@ -76,25 +88,18 @@ export const updateSliderSettings = (effect) => {
       break;
 
     default:
-    case ('none'):
-      editorPreviewElement.style.filter = '';
+    case Effects.NONE:
+      editorSliderElement.noUiSlider.updateOptions(getDefaultSliderSettings());
       break;
   }
 };
 
+export const resetSlider = () => {
+  updateSliderSettings(Effects.NONE);
+};
+
 export const initSlider = () => {
-  noUiSlider.create(editorSliderElement, {
-    range: {
-      min: 0,
-      max: 0,
-    },
-    start: 0,
-    connect: 'lower',
-    format: {
-      to: getFormatFromSlider(),
-      from: getFormatToSlider(),
-    },
-  });
+  noUiSlider.create(editorSliderElement, getDefaultSliderSettings());
 
   const activeElement = editorElement.querySelector('input[type="radio"]:checked');
   activeEffectName = activeElement?.value || activeEffectName;
@@ -112,6 +117,7 @@ export const initSlider = () => {
 
   editorSliderElement.noUiSlider.on('update', () => {
     editorEffectValueElement.value = editorSliderElement.noUiSlider.get();
-    editorPreviewElement.style.filter = `${EffectStyles[activeEffectName]}(${editorEffectValueElement.value}${activeEffectUnit})`;
+    editorPreviewElement.style.filter = (activeEffectName === Effects.NONE) ? EffectStyles[Effects.NONE] :
+      `${EffectStyles[activeEffectName]}(${editorEffectValueElement.value}${activeEffectUnit})`;
   });
 };

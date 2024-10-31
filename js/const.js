@@ -1,5 +1,4 @@
 const BASE_URL = 'https://31.javascript.htmlacademy.pro/kekstagram';
-export const MAX_SHOWN_COMMENT_QUANTITY = 5;
 
 export const EndPoints = {
   SEND: `${BASE_URL}`,
@@ -28,8 +27,28 @@ export const Effects = {
 export const EffectStyles = {
   [Effects.CHROME]: 'grayscale',
   [Effects.HEAT]: 'brightness',
-  [Effects.NONE]: '',
+  [Effects.NONE]: 'none',
   [Effects.MARVIN]: 'invert',
   [Effects.PHOBOS]: 'blur',
   [Effects.SEPIA]: 'sepia',
+};
+
+export const ButtonMessages = {
+  SEND: 'Опубликовать',
+  SENDING: 'Отправляем...',
+};
+
+export const PictureFilters = {
+  DEFAULT: 'filter-default',
+  RANDOM: 'filter-random',
+  DISCUSSED: 'filter-discussed',
+};
+
+export const Gallery = {
+  SHOWN_RANDOM_PICTURE_QUANTITY: 10,
+  MAX_SHOWN_COMMENT_QUANTITY: 5,
+};
+
+export const Filters = {
+  ACTIVE_FILTER_CLASS: 'img-filters__button--active',
 };

@@ -53,10 +53,11 @@ export const validateHashTags = (checkedValue = '') => {
 };
 
 export const validateComment = (checkedValue = '') => {
-  if (!checkedValue.length) {
-    return true;
+  if (checkedValue.trim().length > COMMENT_MAX_LENGTH) {
+    errorMessage = `Не более ${COMMENT_MAX_LENGTH} символов`;
+    return false;
   }
 
-  return checkedValue.trim().length <= COMMENT_MAX_LENGTH;
+  return true;
 };
 
