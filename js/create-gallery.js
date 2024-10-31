@@ -1,6 +1,7 @@
 import { MAX_SHOWN_COMMENT_QUANTITY } from './const.js';
 import { createComment } from './create-comment.js';
 import { createPictures } from './create-pictures.js';
+import { initFilters } from './filter.js';
 import { render, RenderPosition } from './render.js';
 import { isEscapeKey } from './utils.js';
 
@@ -9,8 +10,12 @@ const popupElement = document.querySelector('.big-picture');
 const popupCloseButtonElement = popupElement.querySelector('.big-picture__cancel');
 const popupImgElement = popupElement.querySelector('.big-picture__img > img');
 const popupLikesQuantityElement = popupElement.querySelector('.likes-count');
-const popupCommentShownElement = popupElement.querySelector('.social__comment-shown-count');
-const popupCommentsQuantityElement = popupElement.querySelector('.social__comment-total-count');
+
+const popupCommentContainerElement = popupElement.querySelector('.social__comment-count');
+const popupCommentShownElement = popupCommentContainerElement.querySelector('.social__comment-shown-count');
+const popupCommentFromElement = popupCommentContainerElement.querySelector('.social__comment-from');
+const popupCommentsQuantityElement = popupCommentContainerElement.querySelector('.social__comment-total-count');
+
 const popupDescriptionElement = popupElement.querySelector('.social__caption');
 const popupCommentsContainerElement = popupElement.querySelector('.social__comments');
 const popupCommentsLoaderElement = popupElement.querySelector('.social__comments-loader');
@@ -25,7 +30,8 @@ const popupCommentsLoaderHandler = (comments) => {
     render(popupCommentsContainerElement, createComment(comments[i]), RenderPosition.BEFOREEND);
   }
   shownCommentsQuantity += rest;
-  popupCommentShownElement.textContent = shownCommentsQuantity;
+  popupCommentShownElement.textContent = shownCommentsQuantity || '';
+  popupCommentFromElement.classList.toggle('hidden', !comments.length);
   popupCommentsLoaderElement.classList.toggle('hidden', comments.length === shownCommentsQuantity);
 };
 
@@ -67,6 +73,7 @@ popupCommentsLoaderElement.addEventListener('click', () => {
 });
 
 export const createGallery = (pictures = []) => {
+  initFilters();
   pictures.forEach((item) => {
     picturesData.set(item.id, item);
   });

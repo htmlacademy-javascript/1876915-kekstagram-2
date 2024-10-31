@@ -1,5 +1,5 @@
 
-const templateElement = document.querySelector('#picture').content.querySelector('.picture');
+const templateElement = document.querySelector('#picture')?.content.querySelector('.picture');
 
 export const createPictures = (data = []) => {
   const pictures = document.createDocumentFragment();
