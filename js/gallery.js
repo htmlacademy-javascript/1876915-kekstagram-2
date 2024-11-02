@@ -1,9 +1,9 @@
-import { Gallery, PictureFilters } from './const.js';
+import { Gallery, PictureFilter } from './const.js';
 import { createComment } from './create-comment.js';
 import { createPictures } from './create-pictures.js';
 import { getCurrentFilter, initFilters } from './filters.js';
 import { render, RenderPosition } from './render.js';
-import { getRandomArrayPart, isEscapeKey } from './utils.js';
+import { getRandomMixedArray, isEscapeKey } from './utils.js';
 
 const galleryElement = document.querySelector('.pictures');
 const popupElement = document.querySelector('.big-picture');
@@ -23,7 +23,7 @@ const popupCommentsLoaderElement = popupElement.querySelector('.social__comments
 let shownCommentsQuantity = 0;
 let currentPictureId = 0;
 let picturesData = [];
-let renderedPictures = [];
+let renderedPictureElements = [];
 
 const popupCommentsLoaderHandler = (comments) => {
   const rest = Math.min((comments.length - shownCommentsQuantity), Gallery.MAX_SHOWN_COMMENT_QUANTITY);
@@ -60,32 +60,40 @@ const showPopup = ({ url, likes, description, comments = [] }) => {
 
 const getPictureById = (id) => picturesData.find((item) => item.id === id);
 const removeRenderedPictures = () => {
-  for (const item of renderedPictures) {
+  for (const item of renderedPictureElements) {
     item.remove();
   }
 };
 
-export const updateGallery = (filter) => {
+const pictureClickHandler = (evt) => {
+  const parent = evt.target.closest('.picture');
+  if (parent) {
+    evt.preventDefault();
+    currentPictureId = +parent.dataset.id;
+    showPopup(getPictureById(currentPictureId));
+  }
+};
+
+export const updateGallery = (data = [], filter) => {
   removeRenderedPictures();
-  let pictures;
 
   switch (filter) {
     default:
-    case PictureFilters.DEFAULT:
-      pictures = [...picturesData];
+    case PictureFilter.DEFAULT:
+      picturesData = [...data];
       break;
 
-    case PictureFilters.DISCUSSED:
-      pictures = [...picturesData].sort((a, b) => b.comments.length - a.comments.length);
+    case PictureFilter.DISCUSSED:
+      picturesData = [...data].sort((a, b) => b.comments.length - a.comments.length);
       break;
 
-    case PictureFilters.RANDOM:
-      pictures = getRandomArrayPart(picturesData, Gallery.SHOWN_RANDOM_PICTURE_QUANTITY);
+    case PictureFilter.RANDOM:
+      picturesData = getRandomMixedArray(data, Gallery.RANDOM_TYPE_PICTURE_QUANTITY);
       break;
   }
 
-  pictures = createPictures(pictures);
-  renderedPictures = [...pictures.children];
+  const pictures = createPictures(picturesData);
+  renderedPictureElements = [...pictures.children];
   render(galleryElement, pictures, RenderPosition.BEFOREEND);
 };
 
@@ -98,14 +106,7 @@ export const createGallery = (pictures = []) => {
     popupCommentsLoaderHandler(getPictureById(currentPictureId)?.comments);
   });
 
-  galleryElement.addEventListener('click', (evt) => {
-    const parent = evt.target.closest('.picture');
-    if (parent) {
-      evt.preventDefault();
-      currentPictureId = +parent.dataset.id;
-      showPopup(getPictureById(currentPictureId));
-    }
-  });
+  galleryElement.addEventListener('click', pictureClickHandler);
 
-  updateGallery(getCurrentFilter());
+  updateGallery(picturesData, getCurrentFilter());
 };
