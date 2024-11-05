@@ -1,6 +1,6 @@
-import { ButtonMessage, Scale } from './const.js';
+import { ButtonMessage, File, Scale } from './const.js';
 import { sendData } from './fetch.js';
-import { showUploadErrorMessage, showUploadSuccessMessage } from './api-message.js';
+import { showFileErrorMessage, showUploadErrorMessage, showUploadSuccessMessage } from './api-message.js';
 import { initSlider, resetSlider } from './slider.js';
 import { disableButton, enableButton, isEscapeKey } from './utils.js';
 import { getErrorMessage, validateComment, validateHashTags } from './validation.js';
@@ -22,6 +22,8 @@ const scaleDecButton = editorElement.querySelector('.scale__control--smaller');
 
 let scale = Scale.PICTURE_DEFAULT_SCALE;
 let pristine = null;
+
+const checkFileValidity = (file) => File.FILE_TYPES.some((value) => value === file.type);
 
 const setScale = (value) => {
   editorScaleControlElement.value = `${Math.round(value * 100)}%`;
@@ -57,10 +59,15 @@ const overlayCloseButtonHandler = () => {
 };
 
 const openOverlay = () => {
+  const file = (filePickerElement.files[0]);
+  if (!checkFileValidity(file)) {
+    showFileErrorMessage(File.FILE_TYPE_ERROR_MESSAGE);
+    return;
+  }
+
+  updateOverlayEffectImages(URL.createObjectURL(file));
   editorElement.classList.remove('hidden');
   document.body.classList.add('modal-open');
-  updateOverlayEffectImages(URL.createObjectURL(filePickerElement.files[0]));
-
   document.addEventListener('keydown', overlayCloseKeyHandler);
 };
 

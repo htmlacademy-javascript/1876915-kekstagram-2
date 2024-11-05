@@ -18,13 +18,23 @@ const getMessageCloseHandler = (messageElement, buttonElement) => {
   return messageCloseHandler;
 };
 
-const createMessage = (template) => {
+const createMessage = (template, message) => {
   if (!template) {
     return;
   }
   const fragment = document.createDocumentFragment();
   const clonedElement = template.cloneNode(true);
   const buttonElement = clonedElement.querySelector('button');
+
+  if (document.querySelector(`.${template.classList[0]}`)) {
+    return;
+  }
+
+  if (message) {
+    const title = clonedElement.querySelector('h2');
+    title.textContent = message;
+  }
+
   if (buttonElement) {
     const evtHandler = getMessageCloseHandler(clonedElement, buttonElement);
     document.body.addEventListener('click', evtHandler);
@@ -42,3 +52,5 @@ export const showUploadSuccessMessage = () => createMessage(uploadSuccessTemplat
 export const showUploadErrorMessage = () => createMessage(uploadErrorTemplateElement);
 
 export const showDownloadErrorMessage = () => createMessage(downloadErrorTemplateElement);
+
+export const showFileErrorMessage = (message) => createMessage(downloadErrorTemplateElement, message);

@@ -49,6 +49,11 @@ export const Gallery = {
   MAX_SHOWN_COMMENT_QUANTITY: 5,
 };
 
+export const File = {
+  FILE_TYPES: ['image/jpg', 'image/jpeg', 'image/png'],
+  FILE_TYPE_ERROR_MESSAGE: 'Не верный формат файла',
+};
+
 export const Filter = {
   ACTIVE_FILTER_CLASS: 'img-filters__button--active',
   INACTIVE_LIST: 'img-filters--inactive',
