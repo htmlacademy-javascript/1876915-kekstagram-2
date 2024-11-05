@@ -1,22 +1,21 @@
-const BASE_URL = 'https://31.javascript.htmlacademy.pro/kekstagram';
-export const MAX_SHOWN_COMMENT_QUANTITY = 5;
+const BASE_URL = 'https://32.javascript.htmlacademy.pro/kekstagram';
 
-export const EndPoints = {
+export const EndPoint = {
   SEND: `${BASE_URL}`,
   GET: `${BASE_URL}/data`,
 };
 
-export const Methods = {
+export const Method = {
   GET: 'GET',
   POST: 'POST',
 };
 
-export const KeyCodes = {
+export const KeyCode = {
   ESC: 'Escape',
   ENTER: 'Enter',
 };
 
-export const Effects = {
+export const Effect = {
   CHROME: 'chrome',
   HEAT: 'heat',
   NONE: 'none',
@@ -25,16 +24,52 @@ export const Effects = {
   SEPIA: 'sepia',
 };
 
-export const EffectStyles = {
-  [Effects.CHROME]: 'grayscale',
-  [Effects.HEAT]: 'brightness',
-  [Effects.NONE]: 'none',
-  [Effects.MARVIN]: 'invert',
-  [Effects.PHOBOS]: 'blur',
-  [Effects.SEPIA]: 'sepia',
+export const EffectStyle = {
+  [Effect.CHROME]: 'grayscale',
+  [Effect.HEAT]: 'brightness',
+  [Effect.NONE]: 'none',
+  [Effect.MARVIN]: 'invert',
+  [Effect.PHOBOS]: 'blur',
+  [Effect.SEPIA]: 'sepia',
 };
 
-export const ButtonMessages = {
+export const ButtonMessage = {
   SEND: 'Опубликовать',
   SENDING: 'Отправляем...',
+};
+
+export const PictureFilter = {
+  DEFAULT: 'filter-default',
+  RANDOM: 'filter-random',
+  DISCUSSED: 'filter-discussed',
+};
+
+export const Gallery = {
+  RANDOM_TYPE_PICTURE_QUANTITY: 10,
+  MAX_SHOWN_COMMENT_QUANTITY: 5,
+};
+
+export const File = {
+  FILE_TYPES: ['image/jpg', 'image/jpeg', 'image/png'],
+  FILE_TYPE_ERROR_MESSAGE: 'Не верный формат файла',
+};
+
+export const Filter = {
+  ACTIVE_FILTER_CLASS: 'img-filters__button--active',
+  INACTIVE_LIST: 'img-filters--inactive',
+  DEBOUNCE_TIME: 500,
+};
+
+export const Scale = {
+  DEFAULT_PREVIEW_IMAGE: 'img/upload-default-image.jpg',
+  PICTURE_SCALE_STEP: 0.25,
+  PICTURE_DEFAULT_SCALE: 1.0,
+  PICTURE_MAX_SCALE: 1.0,
+  PICTURE_MIN_SCALE: 0.25,
+};
+
+export const Validity = {
+  HASHTAG_MAX_QUANTITY: 5,
+  HASHTAG_MAX_LENGTH: 20,
+  COMMENT_MAX_LENGTH: 140,
 };

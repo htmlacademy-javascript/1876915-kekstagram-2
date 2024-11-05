@@ -1,9 +1,9 @@
-import { MAX_SHOWN_COMMENT_QUANTITY } from './const.js';
+import { Gallery, PictureFilter } from './const.js';
 import { createComment } from './create-comment.js';
 import { createPictures } from './create-pictures.js';
-import { initFilters } from './filter.js';
+import { getCurrentFilter, initFilters } from './filters.js';
 import { render, RenderPosition } from './render.js';
-import { isEscapeKey } from './utils.js';
+import { getRandomMixedArray, isEscapeKey } from './utils.js';
 
 const galleryElement = document.querySelector('.pictures');
 const popupElement = document.querySelector('.big-picture');
@@ -22,10 +22,11 @@ const popupCommentsLoaderElement = popupElement.querySelector('.social__comments
 
 let shownCommentsQuantity = 0;
 let currentPictureId = 0;
-const picturesData = new Map();
+let picturesData = [];
+let renderedPictureElements = [];
 
 const popupCommentsLoaderHandler = (comments) => {
-  const rest = Math.min((comments.length - shownCommentsQuantity), MAX_SHOWN_COMMENT_QUANTITY);
+  const rest = Math.min((comments.length - shownCommentsQuantity), Gallery.MAX_SHOWN_COMMENT_QUANTITY);
   for (let i = shownCommentsQuantity; i < (shownCommentsQuantity + rest); i++) {
     render(popupCommentsContainerElement, createComment(comments[i]), RenderPosition.BEFOREEND);
   }
@@ -41,13 +42,13 @@ const popupCloseButtonHandler = () => {
   shownCommentsQuantity = 0;
   popupElement.classList.add('hidden');
   document.body.classList.remove('modal-open');
-  document.body.removeEventListener('keydown', popupCloseKeyHandler);
+  document.removeEventListener('keydown', popupCloseKeyHandler);
 };
 
 const showPopup = ({ url, likes, description, comments = [] }) => {
   popupElement.classList.remove('hidden');
   document.body.classList.add('modal-open');
-  document.body.addEventListener('keydown', popupCloseKeyHandler);
+  document.addEventListener('keydown', popupCloseKeyHandler);
   popupImgElement.src = url;
   popupImgElement.alt = description;
   popupDescriptionElement.textContent = description;
@@ -57,26 +58,55 @@ const showPopup = ({ url, likes, description, comments = [] }) => {
   popupCommentsLoaderHandler(comments);
 };
 
-galleryElement.addEventListener('click', (evt) => {
+const getPictureById = (id) => picturesData.find((item) => item.id === id);
+const removeRenderedPictures = () => {
+  for (const item of renderedPictureElements) {
+    item.remove();
+  }
+};
+
+const pictureClickHandler = (evt) => {
   const parent = evt.target.closest('.picture');
   if (parent) {
     evt.preventDefault();
     currentPictureId = +parent.dataset.id;
-    showPopup(picturesData.get(currentPictureId));
+    showPopup(getPictureById(currentPictureId));
   }
-});
+};
 
-popupCloseButtonElement.addEventListener('click', popupCloseButtonHandler);
+export const updateGallery = (data = [], filter) => {
+  removeRenderedPictures();
 
-popupCommentsLoaderElement.addEventListener('click', () => {
-  popupCommentsLoaderHandler(picturesData.get(currentPictureId).comments);
-});
+  switch (filter) {
+    default:
+    case PictureFilter.DEFAULT:
+      picturesData = [...data];
+      break;
+
+    case PictureFilter.DISCUSSED:
+      picturesData = [...data].sort((a, b) => b.comments.length - a.comments.length);
+      break;
+
+    case PictureFilter.RANDOM:
+      picturesData = getRandomMixedArray(data, Gallery.RANDOM_TYPE_PICTURE_QUANTITY);
+      break;
+  }
+
+  const pictures = createPictures(picturesData);
+  renderedPictureElements = [...pictures.children];
+  render(galleryElement, pictures, RenderPosition.BEFOREEND);
+};
 
 export const createGallery = (pictures = []) => {
   initFilters();
-  pictures.forEach((item) => {
-    picturesData.set(item.id, item);
+  picturesData = pictures;
+
+  popupCloseButtonElement.addEventListener('click', popupCloseButtonHandler);
+  popupCommentsLoaderElement.addEventListener('click', () => {
+    popupCommentsLoaderHandler(getPictureById(currentPictureId)?.comments);
   });
 
-  render(galleryElement, createPictures(picturesData.values()), RenderPosition.BEFOREEND);
+  galleryElement.addEventListener('click', pictureClickHandler);
+
+  updateGallery(picturesData, getCurrentFilter());
 };
