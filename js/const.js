@@ -56,7 +56,7 @@ export const File = {
 
 export const Filter = {
   ACTIVE_FILTER_CLASS: 'img-filters__button--active',
-  INACTIVE_LIST: 'img-filters--inactive',
+  INACTIVE_FILTER_LIST: 'img-filters--inactive',
   DEBOUNCE_TIME: 500,
 };
 

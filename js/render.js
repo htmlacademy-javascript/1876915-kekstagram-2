@@ -8,11 +8,11 @@ export const RenderPosition = {
 export const render = (container, fragment, place) => {
 
   if (!(container instanceof Element)) {
-    throw new Error('Container aren\'t instance of Element');
+    throw new Error('Container isn\'t instance of Element');
   }
 
   if (!(fragment instanceof DocumentFragment || fragment instanceof Element)) {
-    throw new Error('fragment aren\'t instance of Element or DocumentFragment');
+    throw new Error('fragment isn\'t instance of Element or DocumentFragment');
   }
 
   switch (place) {

@@ -1,14 +1,14 @@
 import { KeyCode } from './const.js';
 
-export const getRandomMixedArray = (array = [], length = 0) => {
-  const result = [];
-  while (array.length && length--) {
-    const item = Math.round(Math.random() * (array.length - 1));
-    result.push(array[item]);
-    array.splice(item, 1);
+export const getRandomMixedData = (data = [], length = 0) => {
+  const mixedData = [];
+  while (data.length && length--) {
+    const item = Math.round(Math.random() * (data.length - 1));
+    mixedData.push(data[item]);
+    data.splice(item, 1);
   }
 
-  return result;
+  return mixedData;
 };
 
 export const isEscapeKey = (evt) => (evt.key === KeyCode.ESC);

@@ -37,6 +37,11 @@ const updatePreviewScale = (isIncreasing = false) => {
   setScale(scale);
 };
 
+const resetScale = () => {
+  scale = Scale.PICTURE_DEFAULT_SCALE;
+  setScale(scale);
+};
+
 const updateOverlayEffectImages = (url) => {
   editorPreviewElement.src = url;
   effectPreviews.forEach((item) => {
@@ -50,7 +55,7 @@ const overlayCloseButtonHandler = () => {
   formElement.reset();
   pristine.reset();
   resetSlider();
-  setScale(Scale.PICTURE_DEFAULT_SCALE);
+  resetScale();
   editorElement.classList.add('hidden');
   updateOverlayEffectImages(Scale.DEFAULT_PREVIEW_IMAGE);
   document.body.classList.remove('modal-open');
