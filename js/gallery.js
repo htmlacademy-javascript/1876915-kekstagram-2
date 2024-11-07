@@ -3,7 +3,7 @@ import { createComment } from './create-comment.js';
 import { createPictures } from './create-pictures.js';
 import { getCurrentFilter, initFilters } from './filters.js';
 import { render, RenderPosition } from './render.js';
-import { getRandomMixedArray, isEscapeKey } from './utils.js';
+import { getRandomMixedData, isEscapeKey } from './utils.js';
 
 const galleryElement = document.querySelector('.pictures');
 const popupElement = document.querySelector('.big-picture');
@@ -88,7 +88,7 @@ export const updateGallery = (data = [], filter) => {
       break;
 
     case PictureFilter.RANDOM:
-      picturesData = getRandomMixedArray(data, Gallery.RANDOM_TYPE_PICTURE_QUANTITY);
+      picturesData = getRandomMixedData(data, Gallery.RANDOM_TYPE_PICTURE_QUANTITY);
       break;
   }
 

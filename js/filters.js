@@ -28,6 +28,6 @@ export const initFilters = () => {
     firstChild.classList.add(Filter.ACTIVE_FILTER_CLASS);
     activeElement = firstChild;
   }
-  filterContainerElement.classList.remove(Filter.INACTIVE_LIST);
+  filterContainerElement.classList.remove(Filter.INACTIVE_FILTER_LIST);
   filterContainerElement.addEventListener('click', filterButtonHandler);
 };
