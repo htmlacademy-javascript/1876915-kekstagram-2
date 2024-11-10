@@ -1,4 +1,4 @@
-import { ButtonMessage, File, Scale } from './const.js';
+import { ButtonMessage, Messages, Scale } from './const.js';
 import { sendData } from './fetch.js';
 import { showFileErrorMessage, showUploadErrorMessage, showUploadSuccessMessage } from './api-message.js';
 import { initSlider, resetSlider } from './slider.js';
@@ -23,7 +23,7 @@ const scaleDecButton = editorElement.querySelector('.scale__control--smaller');
 let scale = Scale.PICTURE_DEFAULT_SCALE;
 let pristine = null;
 
-const checkFileValidity = (file) => File.FILE_TYPES.some((value) => value === file.type);
+const checkFileValidity = (file) => Messages.FILE_TYPES.some((value) => value === file.type);
 
 const setScale = (value) => {
   editorScaleControlElement.value = `${Math.round(value * 100)}%`;
@@ -66,7 +66,7 @@ const overlayCloseButtonHandler = () => {
 const openOverlay = () => {
   const file = (filePickerElement.files[0]);
   if (!checkFileValidity(file)) {
-    showFileErrorMessage(File.FILE_TYPE_ERROR_MESSAGE);
+    showFileErrorMessage(Messages.FILE_TYPE_ERROR_MESSAGE);
     return;
   }
 

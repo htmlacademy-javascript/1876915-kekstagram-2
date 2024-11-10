@@ -1,8 +1,9 @@
-import { Filter, PictureFilter } from './const.js';
+import { Filter, Messages, PictureFilter } from './const.js';
 import { getData } from './fetch.js';
 import { updateGallery } from './gallery.js';
 import { showDownloadErrorMessage } from './api-message.js';
 import { debounce } from './utils.js';
+import { getRandomPhotoData } from './data.js';
 
 const filterContainerElement = document.body.querySelector('.img-filters');
 const firstChild = filterContainerElement.querySelector('.img-filters__button');
@@ -16,7 +17,13 @@ const filterButtonHandler = debounce(({ target }) => {
     activeElement.classList.remove(Filter.ACTIVE_FILTER_CLASS);
     target.classList.add(Filter.ACTIVE_FILTER_CLASS);
     activeElement = target;
-    getData((data) => updateGallery(data, currentFilter), showDownloadErrorMessage);
+    getData(
+      (data) => updateGallery(data, currentFilter),
+      () => {
+        showDownloadErrorMessage(Messages.DOWNLOAD_ERROR_MESSAGE);
+        updateGallery(getRandomPhotoData(), currentFilter);
+      },
+    );
   }
 }, Filter.DEBOUNCE_TIME);
 

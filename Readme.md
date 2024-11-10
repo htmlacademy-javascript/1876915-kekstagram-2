@@ -2,7 +2,7 @@
 
 * Студент: [Сергей Софронов](https://htmlacademy.ru/profile/id1876915).
 * Наставник: [Станислав Михайлов](https://htmlacademy.ru/profile/id139638).
-* Проект: ["Кекстаграм — сервис просмотра изображений"](https://github.com/SergeySofronov/1876915-kekstagram-2).
+* Проект: ["Кекстаграм — сервис просмотра изображений"](https://sergeysofronov.github.io/1876915-kekstagram-2/).
 
 ---
 
