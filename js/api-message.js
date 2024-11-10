@@ -1,7 +1,7 @@
 import { render, RenderPosition } from './render.js';
 import { isEscapeKey } from './utils.js';
 
-const MESSAGE_CLOSE_TIME = 5000;
+const MESSAGE_CLOSE_TIME = 500;
 const uploadSuccessTemplateElement = document.querySelector('#success')?.content.querySelector('.success');
 const uploadErrorTemplateElement = document.querySelector('#error')?.content.querySelector('.error');
 const downloadErrorTemplateElement = document.querySelector('#data-error')?.content.querySelector('.data-error');
@@ -51,6 +51,6 @@ export const showUploadSuccessMessage = () => createMessage(uploadSuccessTemplat
 
 export const showUploadErrorMessage = () => createMessage(uploadErrorTemplateElement);
 
-export const showDownloadErrorMessage = () => createMessage(downloadErrorTemplateElement);
+export const showDownloadErrorMessage = (message) => createMessage(downloadErrorTemplateElement, message);
 
 export const showFileErrorMessage = (message) => createMessage(downloadErrorTemplateElement, message);
