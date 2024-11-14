@@ -49,15 +49,16 @@ export const Gallery = {
   MAX_SHOWN_COMMENT_QUANTITY: 5,
 };
 
-export const File = {
+export const Messages = {
   FILE_TYPES: ['image/jpg', 'image/jpeg', 'image/png'],
   FILE_TYPE_ERROR_MESSAGE: 'Не верный формат файла',
+  DOWNLOAD_ERROR_MESSAGE: 'Не удалось загрузить данные. Работа с fake data',
 };
 
 export const Filter = {
   ACTIVE_FILTER_CLASS: 'img-filters__button--active',
   INACTIVE_FILTER_LIST: 'img-filters--inactive',
-  DEBOUNCE_TIME: 500,
+  DEBOUNCE_TIME: 100,
 };
 
 export const Scale = {

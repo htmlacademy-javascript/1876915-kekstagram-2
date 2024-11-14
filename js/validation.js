@@ -13,7 +13,7 @@ const hashtagValidationRules = [
   ],
   [
     (value) => typeof value === 'string' ? value.length <= V.HASHTAG_MAX_LENGTH : true,
-    'Длина хэштега не должна превышать 20 символов',
+    `Длина хэштега не должна превышать ${V.HASHTAG_MAX_LENGTH} ${pluralize(V.HASHTAG_MAX_LENGTH, ['символ', 'символа', 'символов'])}`,
   ],
   [
     (values) => Array.isArray(values) ? values.length <= V.HASHTAG_MAX_QUANTITY + 1 : true,
@@ -51,7 +51,7 @@ export const validateHashTags = (checkedValue = '') => {
 
 export const validateComment = (checkedValue = '') => {
   if (checkedValue.trim().length >= V.COMMENT_MAX_LENGTH) {
-    errorMessage = `Не более ${V.COMMENT_MAX_LENGTH} символов`;
+    errorMessage = `Не более ${V.COMMENT_MAX_LENGTH} ${pluralize(V.HASHTAG_MAX_LENGTH, ['символ', 'символа', 'символов'])}`;
     return false;
   }
 
